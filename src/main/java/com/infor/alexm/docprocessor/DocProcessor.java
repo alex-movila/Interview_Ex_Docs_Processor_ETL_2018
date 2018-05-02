@@ -25,7 +25,6 @@ public class DocProcessor {
     private File inputFile;
     private String searchText;
     private String replacementText;
-    private List<SearchReplaceData> searchReplaceDataList;
 
     public static void main(final String[] args) {
         //load dinamically processors for each file type
@@ -80,9 +79,11 @@ public class DocProcessor {
     private void process(final AnnotationConfigApplicationContext context) {
 
         Processors processors = context.getBean(Processors.class);
-        SearchReplaceEngine searchReplaceEngine = context.getBean("searchReplaceEngine", SearchReplaceEngine.class);
-        SearchReplaceData searchReplaceData = new SearchReplaceData(searchText, replacementText, searchReplaceEngine);
-        searchReplaceDataList = new ArrayList<>();
+        SearchReplaceEngine searchReplaceEngine = context.getBean("searchReplaceEngine",
+                SearchReplaceEngine.class);
+        SearchReplaceData searchReplaceData = new SearchReplaceData(searchText, replacementText,
+                searchReplaceEngine);
+        List<SearchReplaceData> searchReplaceDataList = new ArrayList<>();
         searchReplaceDataList.add(searchReplaceData);
 
         processors.process(inputFile, outputFilePath, searchReplaceDataList);
